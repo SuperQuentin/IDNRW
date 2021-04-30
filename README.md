@@ -1,2 +1,0 @@
-# IDNRW
-ItDoesNotReactWell (IDNRW)
