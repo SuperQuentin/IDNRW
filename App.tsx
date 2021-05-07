@@ -1,18 +1,17 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <View style={styles.item}>test</View>
-      <View style={styles.item}>test</View>
-      <View style={styles.item}>test</View>
-      <View style={styles.item}>test</View>
-      <View style={styles.item}>test</View>
-      <View style={styles.item}>test</View>
-    </View>
-  );
+export default class App extends Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.item}>test</View>
+        <View style={styles.item}>test</View>
+        <View style={styles.item}>test</View>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
