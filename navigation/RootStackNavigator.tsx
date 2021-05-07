@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack'
 
 export type RootParamList = {
-    Login: { initials: string }
+    Login: { initials?: string }
 }
 
 const root = createStackNavigator<RootParamList>()
