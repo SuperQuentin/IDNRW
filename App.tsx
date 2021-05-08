@@ -11,7 +11,7 @@ export default class App extends Component {
         return (
             <NavigationContainer>
                 <Root.Navigator>
-                    <Root.Screen name="Login" component={Login}/>
+                    <Root.Screen name="Login" component={Login} options={{title: "Login"}} initialParams={{initials: ''}}/>
                 </Root.Navigator>
             </NavigationContainer>
 

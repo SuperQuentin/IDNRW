@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootParamList } from '../navigation/RootStackNavigator'
 
@@ -10,10 +10,17 @@ export default class Login extends Component<LoginProps> {
         super({ navigation, route })
     }
 
+    onPressConnection = () => {
+        this.props.navigation.push('Login', { initials: "QAN" })
+    }
+
     render() {
+        const { initials } = this.props.route.params
+
         return (
             <View>
-                <Text>Login</Text>
+                <Text>Hello {initials   }</Text>
+                <Button title="Connexion" onPress={this.onPressConnection} />
             </View>
         )
     }
