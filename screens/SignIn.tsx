@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, Button } from "react-native";
+import { StyleSheet, View, Text, Button } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootParamList } from '../navigation/RootStackNavigator'
 
-type LoginProps = StackScreenProps<RootParamList, 'SignIn'>
+type SignInProps = StackScreenProps<RootParamList, 'SignIn'>
 
-export default class Login extends Component<LoginProps> {
-    constructor({ navigation, route }: LoginProps) {
+export default class SignIn extends Component<SignInProps> {
+    constructor({ navigation, route }: SignInProps) {
         super({ navigation, route })
     }
 
