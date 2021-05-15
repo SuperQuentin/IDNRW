@@ -7,7 +7,12 @@ type ActionBottomTabProps = {
     children?: ReactNode
 }
 
-const Tab = createBottomTabNavigator()
+export type ActionBottomTabParamList = {
+    Report: undefined,
+    Drug: undefined
+}
+
+const Tab = createBottomTabNavigator<ActionBottomTabParamList>()
 
 export default class ActionBottomTabNavigator extends Component<ActionBottomTabProps> {
     render() {
