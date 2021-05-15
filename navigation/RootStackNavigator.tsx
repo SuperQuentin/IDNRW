@@ -25,7 +25,7 @@ export default class RootStackNavigator extends Component<{},RootState> {
 
         this.state = {
             isLoading: false,
-            userToken: null
+            userToken: undefined
         }
     }
 
