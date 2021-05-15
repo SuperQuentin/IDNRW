@@ -25,7 +25,12 @@ export default class RootStackNavigator extends Component<{},RootState> {
 
         this.state = {
             isLoading: false,
+            userToken: null
         }
+    }
+
+    isEmpty(str?: string) {
+        return (!str || str.length === 0)
     }
     
     
@@ -36,7 +41,7 @@ export default class RootStackNavigator extends Component<{},RootState> {
 
         return (
             <Root.Navigator>
-                { this.state.userToken == null ? (
+                { this.isEmpty(this.state.userToken) ? (
                     <>
                         <Root.Screen name="SignIn" component={SignInScreen} options={{ title: "Login" }} initialParams={{ initials: '' }} />
                     </>
