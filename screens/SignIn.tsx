@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootParamList } from '../navigation/RootStackNavigator'
 
 import Input from '../components/form/Input'
 
 
-type SignInProps = StackScreenProps<RootParamList, 'SignIn'>
+export type SignInProps = StackScreenProps<RootParamList, 'SignIn'>
 
 export default class SignIn extends Component<SignInProps> {
     constructor({ navigation, route }: SignInProps) {

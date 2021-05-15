@@ -12,7 +12,7 @@ export type RootParamList = {
     Action: undefined
 }
 
-export type RootState = {
+export interface RootState {
     isLoading: boolean,
     userToken?: string,
 }

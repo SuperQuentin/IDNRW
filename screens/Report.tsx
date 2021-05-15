@@ -3,7 +3,7 @@ import { StackScreenProps } from "@react-navigation/stack"
 import { ActionBottomTabParamList } from '../navigation/ActionBottomTabNavigator'
 import { View } from 'react-native'
 
-type ReportProps = StackScreenProps< ActionBottomTabParamList, 'Report'>
+export type ReportProps = StackScreenProps< ActionBottomTabParamList, 'Report'>
 
 export default class Report extends Component<ReportProps>{
     render(){

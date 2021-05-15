@@ -3,7 +3,7 @@ import { StackScreenProps } from "@react-navigation/stack"
 import {  ActionBottomTabParamList } from '../navigation/ActionBottomTabNavigator'
 import { View } from 'react-native'
 
-type DrugProps = StackScreenProps< ActionBottomTabParamList, 'Drug'>
+export type DrugProps = StackScreenProps< ActionBottomTabParamList, 'Drug'>
 
 export default class Drug extends Component<DrugProps> {
     constructor({ navigation, route }: DrugProps ){

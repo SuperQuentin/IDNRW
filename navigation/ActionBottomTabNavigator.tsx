@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ReportScreen from '../screens/Report'
 import DrugScreen from '../screens/Drug'
 
-type ActionBottomTabProps = {
+export interface ActionBottomTabProps {
     children?: ReactNode
 }
 
