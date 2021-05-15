@@ -1,7 +1,10 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { View, Text, Button, StyleSheet } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootParamList } from '../navigation/RootStackNavigator'
+
+import Input from '../components/form/Input'
+
 
 type SignInProps = StackScreenProps<RootParamList, 'SignIn'>
 
@@ -19,7 +22,7 @@ export default class SignIn extends Component<SignInProps> {
 
         return (
             <View>
-                <Text>Hello {initials   }</Text>
+                <Input label="Initials" />
                 <Button title="Connexion" onPress={this.onPressConnection} />
             </View>
         )
