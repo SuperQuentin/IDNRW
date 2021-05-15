@@ -11,7 +11,7 @@ export default class Login extends Component<LoginProps> {
     }
 
     onPressConnection = () => {
-        this.props.navigation.push('Login', { initials: "QAN" })
+        this.props.navigation.navigate('Action')
     }
 
     render() {
