@@ -9,8 +9,8 @@ import Input from '../components/form/Input'
 export type SignInProps = StackScreenProps<RootParamList, 'SignIn'>
 
 export default class SignIn extends Component<SignInProps> {
-    constructor({ navigation, route }: SignInProps) {
-        super({ navigation, route })
+    constructor(props: SignInProps) {
+        super(props)
     }
 
     onPressConnection = () => {
