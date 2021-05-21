@@ -1,30 +1,29 @@
 import React, { Component } from "react";
 import { View, Text, Button } from "react-native";
-import { StackScreenProps } from "@react-navigation/stack"
-import { RootParamList } from '../navigation/RootStackNavigator'
+import { StackScreenProps } from "@react-navigation/stack";
+import { RootParamList } from "../navigation/RootStackNavigator";
 
-import Input from '../components/form/Input'
+import Input from "../components/form/Input";
 
-
-export type SignInProps = StackScreenProps<RootParamList, 'SignIn'>
+export type SignInProps = StackScreenProps<RootParamList, "SignIn">;
 
 export default class SignIn extends Component<SignInProps> {
-    constructor(props: SignInProps) {
-        super(props)
-    }
+  constructor(props: SignInProps) {
+    super(props);
+  }
 
-    onPressConnection = () => {
-        this.props.navigation.navigate('Action')
-    }
+  onPressConnection = () => {
+    this.props.navigation.navigate("Action");
+  };
 
-    render() {
-        const { initials } = this.props.route.params
+  render() {
+    const { initials } = this.props.route.params;
 
-        return (
-            <View>
-                <Input label="Initials" />
-                <Button title="Connexion" onPress={this.onPressConnection} />
-            </View>
-        )
-    }
+    return (
+      <View>
+        <Input label="Initials" />
+        <Button title="Connexion" onPress={this.onPressConnection} />
+      </View>
+    );
+  }
 }
