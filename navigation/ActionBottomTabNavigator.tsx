@@ -15,6 +15,9 @@ export type ActionBottomTabParamList = {
 const Tab = createBottomTabNavigator<ActionBottomTabParamList>()
 
 export default class ActionBottomTabNavigator extends Component<ActionBottomTabProps> {
+    constructor(props: ActionBottomTabProps){
+        super(props)
+    }
     render() {
         return (
             <Tab.Navigator>
