@@ -15,7 +15,10 @@ export default class Input extends Component<InputProps> {
   render() {
     return (
       <BaseInput label={this.props.label}>
-        <TextInput value={this.props.value} onChange={this.props.onChange} />
+        <TextInput
+          value={this.props.value}
+          onChangeText={this.props.onChange}
+        />
       </BaseInput>
     );
   }

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
-import { View, Text, Button } from "react-native";
+import { View, Button } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootParamList } from "../navigation/RootStackNavigator";
 import SquareButtonContainer from "../components/button/SquareButtonContainer";
@@ -9,37 +8,86 @@ import getBases from "../api/getBases";
 
 import Input from "../components/form/Input";
 
-export type SignInProps = StackScreenProps<RootParamList, "SignIn">;
+interface SignInScreen {
+  bases: base[];
+  user: {
+    initials: string;
+    password: string;
+    currentBaseID: number;
+  };
+}
 
-export default class SignIn extends Component<SignInProps, { bases: [] }> {
+export type SignInProps = StackScreenProps<RootParamList, "SignIn">;
+export default class SignIn extends Component<SignInProps> {
+  state = {
+    bases: [],
+    user: {
+      intitials: "",
+      password: "",
+      currentBaseId: 0,
+    },
+  };
+
   constructor(props: SignInProps) {
     super(props);
-    this.state = {
-      bases: [],
-    };
+    this.setInitials = this.setInitials.bind(this);
+    this.setPassword = this.setPassword.bind(this);
+    this.setCurrentBase = this.setCurrentBase.bind(this);
   }
 
   componentDidMount = async () => {
-    this.setState({ bases: await getBases() });
+    this.setState({
+      bases: await getBases(),
+      user: {
+        ...this.state.user,
+      },
+    });
   };
 
-  onPressConnection = () => {};
+  setInitials(initials: string) {
+    this.setState({
+      user: {
+        ...this.state.user,
+        initials: initials,
+      },
+    });
+  }
+  setPassword(password: string) {
+    this.setState({
+      user: {
+        ...this.state.user,
+        password: password,
+      },
+    });
+  }
+  setCurrentBase(currentBaseId: number) {
+    this.setState({
+      user: {
+        ...this.state.user,
+        currentBaseId: currentBaseId,
+      },
+    });
+  }
 
   render() {
-    const { initials } = this.props.route.params;
+    const { user, bases } = this.state;
 
     return (
       <View>
-        <Input label="Initials" />
-        <SquareButtonContainer>
-          {this.state.bases &&
-            this.state.bases.map((base: any) => {
+        <Input label="Initials" onChangeText={this.setInitials} />
+        <Input label="Mot de passe" onChangeText={this.setPassword} />
+        <SquareButtonContainer callback={this.setCurrentBase}>
+          {bases &&
+            bases.map((base: any) => {
               return (
                 <SquareButton key={base.id} label={base.name} value={base.id} />
               );
             })}
         </SquareButtonContainer>
-        <Button title="Connexion" onPress={this.onPressConnection} />
+        <Button
+          title="Connexion"
+          onPress={() => this.props.signIn(user.intitials, user.password)}
+        />
       </View>
     );
   }

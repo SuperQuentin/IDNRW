@@ -4,6 +4,7 @@ import SquareButton from "./SquareButton";
 
 export interface SquareButtonContainerProps {
   children: ReactNode;
+  callback?: Function;
 }
 
 export default class SquareButtonContainer extends Component<SquareButtonContainerProps> {
@@ -16,6 +17,7 @@ export default class SquareButtonContainer extends Component<SquareButtonContain
 
   handleCallback = (data: any) => {
     this.setState({ selectedLocation: data.city });
+    this.props.callback(this.state.selectedLocation);
   };
 
   render() {
