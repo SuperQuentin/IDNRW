@@ -5,29 +5,26 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { RootParamList } from "../navigation/RootStackNavigator";
 import SquareButtonContainer from "../components/button/SquareButtonContainer";
 import SquareButton from "../components/button/SquareButton";
+import getBases from "../api/getBases";
 
 import Input from "../components/form/Input";
 
 export type SignInProps = StackScreenProps<RootParamList, "SignIn">;
 
-export default class SignIn extends Component<SignInProps> {
+export default class SignIn extends Component<SignInProps, { bases: [] }> {
   constructor(props: SignInProps) {
     super(props);
     this.state = {
-      cities: [],
+      bases: [],
     };
-    this.getCities();
   }
 
-  onPressConnection = () => {
-    this.props.navigation.navigate("Action");
+  componentDidMount = async () => {
+    this.setState({ bases: await getBases() });
   };
 
-  getCities = async () => {
-    let response = await axios.get("http://127.0.0.1:8000/api/bases");
-    this.setState({ cities: response.data });
-    console.log(this.state.cities);
-  };
+  onPressConnection = () => {};
+
   render() {
     const { initials } = this.props.route.params;
 
@@ -35,10 +32,10 @@ export default class SignIn extends Component<SignInProps> {
       <View>
         <Input label="Initials" />
         <SquareButtonContainer>
-          {this.state.cities &&
-            this.state.cities.map((city: any) => {
+          {this.state.bases &&
+            this.state.bases.map((base: any) => {
               return (
-                <SquareButton key={city.id} label={city.name} value={city.id} />
+                <SquareButton key={base.id} label={base.name} value={base.id} />
               );
             })}
         </SquareButtonContainer>
