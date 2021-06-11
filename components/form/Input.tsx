@@ -4,7 +4,7 @@ import BaseInput, { BaseInputProps } from "./BaseInput";
 
 export interface InputProps extends BaseInputProps {
   value?: string;
-  onChange?: undefined;
+  onChangeText?: Function;
 }
 
 export default class Input extends Component<InputProps> {
@@ -17,7 +17,7 @@ export default class Input extends Component<InputProps> {
       <BaseInput label={this.props.label}>
         <TextInput
           value={this.props.value}
-          onChangeText={this.props.onChange}
+          onChangeText={this.props.onChangeText}
         />
       </BaseInput>
     );
