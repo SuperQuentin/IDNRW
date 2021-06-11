@@ -4,14 +4,17 @@ import SquareButton from "./SquareButton";
 
 export interface SquareButtonContainerProps {
   children: ReactNode;
-  callback?: Function;
+  callback: Function;
 }
 
-export default class SquareButtonContainer extends Component<SquareButtonContainerProps> {
+export default class SquareButtonContainer extends Component<
+  SquareButtonContainerProps,
+  { selectedLocation: number }
+> {
   constructor(props: SquareButtonContainerProps) {
     super(props);
     this.state = {
-      selectedLocation: null,
+      selectedLocation: 0,
     };
   }
 
