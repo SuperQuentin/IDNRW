@@ -1,10 +1,12 @@
 import axios from "axios";
-import Constants from "expo-constants";
-const { manifest } = Constants;
 
-const URL = `http://${manifest.debuggerHost.split(":").shift()}:8000/api/bases`;
+const URL = `http://172.17.102.239:8000/api/bases`;
 
 export default async () => {
   let response = await axios.get(URL);
-  return response.data;
+  if (response.status === 200) {
+    return response.data;
+  } else {
+    //todo: somethings wrong
+  }
 };
