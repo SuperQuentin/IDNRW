@@ -5,6 +5,11 @@ import { RootParamList } from "../navigation/RootStackNavigator";
 import SquareButtonContainer from "../components/button/SquareButtonContainer";
 import SquareButton from "../components/button/SquareButton";
 import getBases from "../api/getBases";
+import getToken from "../api/getToken";
+
+import { UserContext } from "../contexts/userContext";
+import * as SecureStore from "expo-secure-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Input from "../components/form/Input";
 
@@ -18,11 +23,12 @@ interface SignInScreen {
 }
 
 export type SignInProps = StackScreenProps<RootParamList, "SignIn">;
-export default class SignIn extends Component<SignInProps> {
+export default class SignIn extends Component<SignInProps, {}> {
+  static contextType = UserContext;
   state = {
     bases: [],
     user: {
-      intitials: "",
+      initials: "",
       password: "",
       currentBaseId: 0,
     },
@@ -33,6 +39,7 @@ export default class SignIn extends Component<SignInProps> {
     this.setInitials = this.setInitials.bind(this);
     this.setPassword = this.setPassword.bind(this);
     this.setCurrentBase = this.setCurrentBase.bind(this);
+    this.handleSignIn = this.handleSignIn.bind(this);
   }
 
   componentDidMount = async () => {
@@ -40,6 +47,7 @@ export default class SignIn extends Component<SignInProps> {
       bases: await getBases(),
       user: {
         ...this.state.user,
+        initials: this.context.initials,
       },
     });
   };
@@ -69,6 +77,23 @@ export default class SignIn extends Component<SignInProps> {
     });
   }
 
+  handleSignIn = async () => {
+    const { initials, password, currentBaseId } = this.state.user;
+    const token = await getToken(initials, password);
+
+    await SecureStore.setItemAsync("userToken", token);
+
+    await AsyncStorage.setItem("initials", initials.toString());
+    await AsyncStorage.setItem("currentBaseId", currentBaseId.toString());
+
+    this.context.setUser({
+      ...this.state.user,
+      token,
+    });
+
+    console.log("context : ", this.context);
+  };
+
   render() {
     const { user, bases } = this.state;
 
@@ -84,10 +109,7 @@ export default class SignIn extends Component<SignInProps> {
               );
             })}
         </SquareButtonContainer>
-        <Button
-          title="Connexion"
-          onPress={() => this.props.signIn(user.intitials, user.password)}
-        />
+        <Button title="Connexion" onPress={this.handleSignIn} />
       </View>
     );
   }
