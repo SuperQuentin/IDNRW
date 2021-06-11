@@ -8,6 +8,7 @@ import SplashScreen from "../screens/SplashScreen";
 import SignInScreen from "../screens/SignIn";
 
 import ActionTab from "./ActionBottomTabNavigator";
+import LogoutBtn from "../components/button/Logout";
 
 export interface RootStackProps {
   children?: ReactNode;
@@ -67,7 +68,13 @@ export default class RootStackNavigator extends Component<
           </>
         ) : (
           <>
-            <Root.Screen name="Action" component={ActionTab} />
+            <Root.Screen
+              name="Action"
+              options={{
+                headerRight: () => <LogoutBtn />,
+              }}
+              component={ActionTab}
+            />
           </>
         )}
       </Root.Navigator>
