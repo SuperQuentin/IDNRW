@@ -1,6 +1,6 @@
 import React, { Component, ReactNode } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ReportScreen from "../screens/Report";
+import ReportNav from "./ReportsTopTabNavigator";
 import DrugScreen from "../screens/Drug";
 
 export interface ActionBottomTabProps {
@@ -23,8 +23,8 @@ export default class ActionBottomTabNavigator extends Component<ActionBottomTabP
       <Tab.Navigator>
         <Tab.Screen
           name="Report"
-          component={ReportScreen}
-          options={{ title: "Report" }}
+          component={ReportNav}
+          options={{ title: "Reports" }}
         />
         <Tab.Screen
           name="Drug"
