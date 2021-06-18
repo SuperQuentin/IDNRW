@@ -3,7 +3,6 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import * as SecureStore from "expo-secure-store";
 import getReports from "../api/getReports";
 
-import Reports from "../components/Reports";
 import { UserContext } from "../contexts/userContext";
 import DrugsReportScreen from "../screens/Reports/Drug";
 import ShiftsReportScreen from "../screens/Reports/Shift";
@@ -34,7 +33,6 @@ export default class ReportsTopTabNavigator extends Component<ReportsTopTabProps
     this.setState({
       reports: reports,
     });
-    console.log(this.state.reports);
   }
 
   render() {
