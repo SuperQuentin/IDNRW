@@ -1,6 +1,6 @@
 import React, { Component, ReactNode } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ReportNav from "./ReportsTopTabNavigator";
+import ConsultationNav from "./ConsultationStackNavigator";
 import DrugScreen from "../screens/Drug";
 
 export interface ActionBottomTabProps {
@@ -8,7 +8,7 @@ export interface ActionBottomTabProps {
 }
 
 export type ActionBottomTabParamList = {
-  Report: undefined;
+  Consultation: undefined;
   Drug: undefined;
 };
 
@@ -22,9 +22,9 @@ export default class ActionBottomTabNavigator extends Component<ActionBottomTabP
     return (
       <Tab.Navigator>
         <Tab.Screen
-          name="Report"
-          component={ReportNav}
-          options={{ title: "Reports" }}
+          name="Consultation"
+          component={ConsultationNav}
+          options={{ title: "Consultations" }}
         />
         <Tab.Screen
           name="Drug"
