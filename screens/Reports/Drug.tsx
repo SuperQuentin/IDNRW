@@ -1,13 +1,21 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { Component } from "react";
+import { FlatList, Text } from "react-native";
+import { View } from "react-native";
 import getReports from "../../api/getReports";
-import Report from "../../components/Reports";
+import ReportItem from "../../components/ReportItem";
 import { UserContext } from "../../contexts/userContext";
-import { ReportsTopTabParamList } from "../../navigation/ReportsTopTabNavigator";
+import { ConsultationParamList } from "../../navigation/ConsultationStackNavigator";
 
-export type DrugsReportProps = StackScreenProps<ReportsTopTabParamList, "Drug">;
+export type DrugsReportProps = StackScreenProps<
+  ConsultationParamList,
+  "ReportDetails"
+>;
 
-export default class DrugsReportScreen extends Component<DrugsReportProps> {
+export default class DrugsReportScreen extends Component<
+  DrugsReportProps,
+  { drugs: [] }
+> {
   static contextType = UserContext;
   constructor(props: DrugsReportProps) {
     super(props);
@@ -21,6 +29,9 @@ export default class DrugsReportScreen extends Component<DrugsReportProps> {
     await this.updateDrugs();
   }
 
+  showDetails(id: number) {
+    id ? this.props.navigation.push("ReportDetails", { reportId: id }) : false;
+  }
   async updateDrugs() {
     let reports = await getReports(this.context.token);
     this.setState({
@@ -28,7 +39,29 @@ export default class DrugsReportScreen extends Component<DrugsReportProps> {
     });
   }
 
+  rrenderItem = ({ item }: { item: any }) =>
+    item ? (
+      <ReportItem {...item} detailsHandler={(id) => this.showDetails(id)} />
+    ) : (
+      ""
+    );
+
   render() {
-    return <Report data={this.state.drugs} />;
+    return (
+      <View>
+        {this.state.drugs ? (
+          <FlatList
+            data={this.state.drugs}
+            renderItem={this.renderItem}
+            keyExtractor={(item) => item.id.toString()}
+            style={{
+              marginTop: 24,
+            }}
+          />
+        ) : (
+          <Text>Rine</Text>
+        )}
+      </View>
+    );
   }
 }
