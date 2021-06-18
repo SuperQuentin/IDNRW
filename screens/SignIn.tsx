@@ -90,8 +90,6 @@ export default class SignIn extends Component<SignInProps, {}> {
       ...this.state.user,
       token,
     });
-
-    console.log("context : ", this.context);
   };
 
   render() {
@@ -100,7 +98,11 @@ export default class SignIn extends Component<SignInProps, {}> {
     return (
       <View>
         <Input label="Initials" onChangeText={this.setInitials} />
-        <Input label="Mot de passe" onChangeText={this.setPassword} />
+        <Input
+          label="Mot de passe"
+          onChangeText={this.setPassword}
+          secureTextEntry={true}
+        />
         <SquareButtonContainer callback={this.setCurrentBase}>
           {bases &&
             bases.map((base: any) => {

@@ -5,6 +5,7 @@ import BaseInput, { BaseInputProps } from "./BaseInput";
 export interface InputProps extends BaseInputProps {
   value?: string;
   onChangeText?: Function;
+  secureTextEntry?: Boolean;
 }
 
 export default class Input extends Component<InputProps> {
@@ -13,12 +14,10 @@ export default class Input extends Component<InputProps> {
   }
 
   render() {
+    const { label } = this.props;
     return (
-      <BaseInput label={this.props.label}>
-        <TextInput
-          value={this.props.value}
-          onChangeText={this.props.onChangeText}
-        />
+      <BaseInput label={label}>
+        <TextInput {...this.props} />
       </BaseInput>
     );
   }

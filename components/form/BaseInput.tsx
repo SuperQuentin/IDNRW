@@ -12,10 +12,11 @@ export default class BaseInput extends Component<BaseInputProps> {
   }
 
   render() {
+    const { label, children } = this.props;
     return (
       <View>
-        <Text>{this.props.label}</Text>
-        {this.props.children}
+        <Text>{label}</Text>
+        {children}
       </View>
     );
   }
