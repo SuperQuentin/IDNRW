@@ -44,7 +44,6 @@ export default class ReportDetails extends Component<ReportDetailsProps> {
   }
 
   render() {
-    console.log(this.state.details);
     return (
       <View>
         {this.state.details ? (
