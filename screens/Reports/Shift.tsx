@@ -65,7 +65,7 @@ export default class ShiftsReportScreen extends Component<
   }
 
   renderItem = ({ item }: { item: any }) =>
-    item ? <ReportItem {...item} /> : "";
+    item ? <ReportItem {...item} navigation={this.props.navigation} /> : "";
 
   render() {
     return (

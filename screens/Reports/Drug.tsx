@@ -66,11 +66,7 @@ export default class DrugsReportScreen extends Component<
   }
 
   renderItem = ({ item }: { item: any }) =>
-    item ? (
-      <ReportItem {...item} detailsHandler={(id) => this.showDetails(id)} />
-    ) : (
-      ""
-    );
+    item ? <ReportItem {...item} navigation={this.props.navigation} /> : "";
 
   render() {
     return (

@@ -15,9 +15,5 @@ export default async (token: string | null, id: number) => {
     config.url_base + endpoint + id.toString(),
     axios_config
   );
-  if (response.status === 200) {
-    return response.data;
-  } else {
-    //todo: somethings wrong
-  }
+  return response;
 };

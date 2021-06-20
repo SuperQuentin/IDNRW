@@ -4,6 +4,11 @@ import { View, Text } from "react-native";
 import getReportDetails from "../../api/getReportDetails";
 import { UserContext } from "../../contexts/userContext";
 import { ConsultationParamList } from "../../navigation/ConsultationStackNavigator";
+import {
+  onSuccessToast,
+  onNotPermittedToast,
+  onErrorToast,
+} from "../../utils/toast";
 
 export type ReportDetailsProps = StackScreenProps<
   ConsultationParamList,
@@ -14,17 +19,55 @@ export default class ReportDetails extends Component<ReportDetailsProps> {
   static contextType = UserContext;
   constructor(props: ReportDetailsProps) {
     super(props);
+    this.state = {
+      details: [],
+    };
   }
 
   async componentDidMount() {
-    let data = getReportDetails(this.context.token, this.props.reportId);
-    console.log(data);
+    try {
+      let response = await getReportDetails(
+        this.context.token,
+        this.props.route.params.reportId
+      );
+      if (response.status === 200) {
+        onSuccessToast();
+        this.setState({ details: response.data.data });
+      }
+    } catch (e) {
+      if (e.status === 401) {
+        onNotPermittedToast();
+      } else {
+        onErrorToast();
+      }
+    }
   }
 
   render() {
+    console.log(this.state.details);
     return (
       <View>
-        <Text>Youpi</Text>
+        {this.state.details ? (
+          this.state.details.map((detail) => {
+            return (
+              <View
+                style={{
+                  padding: 16,
+                  marginVertical: 4,
+                  marginHorizontal: 8,
+                  borderRadius: 4,
+                  backgroundColor: "#cacaca",
+                }}
+              >
+                <Text>{detail.day == 1 ? "Jour" : "Nuit"}</Text>
+                <Text>{detail.action}</Text>
+                <Text>{detail.at}</Text>
+              </View>
+            );
+          })
+        ) : (
+          <Text>Rine</Text>
+        )}
       </View>
     );
   }
