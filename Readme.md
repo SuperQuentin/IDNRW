@@ -1,6 +1,10 @@
 # CSU Application mobile
 ## Installation
 
+### Prérequis
+
+- https://docs.expo.io/workflow/expo-cli/
+
 ### Android
 Pour installer le projet :
 
