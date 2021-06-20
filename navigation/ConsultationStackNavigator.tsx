@@ -18,7 +18,11 @@ export default class ConsultationStackNavigator extends Component {
           options={{ headerShown: false }}
           component={ReportsTopTabNav}
         />
-        <Consultation.Screen name="ReportDetails" component={ReportDetails} />
+        <Consultation.Screen
+          name="ReportDetails"
+          component={ReportDetails}
+          options={{ headerTitle: "Détails rapport" }}
+        />
       </Consultation.Navigator>
     );
   }
