@@ -6,6 +6,11 @@ import getReports from "../../api/getReports";
 import ReportItem from "../../components/ReportItem";
 import { UserContext } from "../../contexts/userContext";
 import { ConsultationParamList } from "../../navigation/ConsultationStackNavigator";
+import {
+  onSuccessToast,
+  onNotPermittedToast,
+  onErrorToast,
+} from "../../utils/toast";
 
 export type DrugsReportProps = StackScreenProps<
   ConsultationParamList,
@@ -42,10 +47,22 @@ export default class DrugsReportScreen extends Component<
     //id ? this.props.navigation.push("ReportDetails", { reportId: id }) : false;
   }
   async updateDrugs() {
-    let reports = await getReports(this.context.token);
-    this.setState({
-      drugs: reports.drug,
-    });
+    try {
+      let response = await getReports(this.context.token);
+
+      if (response.status === 200) {
+        onSuccessToast();
+        this.setState({
+          drugs: response.data.drug,
+        });
+      }
+    } catch (e) {
+      if (e.status === 401) {
+        onNotPermittedToast();
+      } else {
+        onErrorToast();
+      }
+    }
   }
 
   renderItem = ({ item }: { item: any }) =>
@@ -63,9 +80,6 @@ export default class DrugsReportScreen extends Component<
             data={this.state.drugs}
             renderItem={this.renderItem}
             keyExtractor={(item) => item.id.toString()}
-            style={{
-              marginTop: 24,
-            }}
           />
         ) : (
           <Text>Rine</Text>

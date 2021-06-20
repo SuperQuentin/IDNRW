@@ -5,6 +5,13 @@ import getReports from "../../api/getReports";
 import ReportItem from "../../components/ReportItem";
 import { UserContext } from "../../contexts/userContext";
 import { ConsultationParamList } from "../../navigation/ConsultationStackNavigator";
+import ReportDetailsModal from "../../components/ReportDetailsModal";
+
+import {
+  onSuccessToast,
+  onNotPermittedToast,
+  onErrorToast,
+} from "../../utils/toast";
 
 export type ShiftsReportProps = StackScreenProps<
   ConsultationParamList,
@@ -39,19 +46,26 @@ export default class ShiftsReportScreen extends Component<
   }
 
   async updateShift() {
-    let reports = await getReports(this.context.token);
-    this.setState({
-      shifts: reports.shift,
-    });
-  }
+    try {
+      let response = await getReports(this.context.token);
 
-  showDetails(id: number) {
-    // TODO display repport details
-    //rid ? this.props.navigation.push("ReportDetails", { reportId: id }) : false;
+      if (response.status === 200) {
+        onSuccessToast();
+        this.setState({
+          shifts: response.data.shift,
+        });
+      }
+    } catch (e) {
+      if (e.status === 401) {
+        onNotPermittedToast();
+      } else {
+        onErrorToast();
+      }
+    }
   }
 
   renderItem = ({ item }: { item: any }) =>
-    item ? <ReportItem {...item} detailsHandler={this.showDetails} /> : "";
+    item ? <ReportItem {...item} /> : "";
 
   render() {
     return (
@@ -61,9 +75,6 @@ export default class ShiftsReportScreen extends Component<
             data={this.state.shifts}
             renderItem={this.renderItem}
             keyExtractor={(item) => item.id.toString()}
-            style={{
-              marginTop: 24,
-            }}
           />
         ) : (
           <Text>Rine</Text>

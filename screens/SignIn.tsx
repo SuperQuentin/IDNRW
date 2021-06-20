@@ -7,6 +7,12 @@ import SquareButton from "../components/button/SquareButton";
 import getBases from "../api/getBases";
 import getToken from "../api/getToken";
 
+import {
+  onSuccessToast,
+  onNotPermittedToast,
+  onErrorToast,
+} from "../utils/toast";
+
 import { UserContext } from "../contexts/userContext";
 import * as SecureStore from "expo-secure-store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -78,18 +84,33 @@ export default class SignIn extends Component<SignInProps, {}> {
   }
 
   handleSignIn = async () => {
-    const { initials, password, currentBaseId } = this.state.user;
-    const token = await getToken(initials, password);
+    try {
+      const { initials, password, currentBaseId } = this.state.user;
+      const response = await getToken(initials, password);
 
-    await SecureStore.setItemAsync("userToken", token);
+      if (response.status === 200) {
+        onSuccessToast();
+      }
 
-    await AsyncStorage.setItem("initials", initials.toString());
-    await AsyncStorage.setItem("currentBaseId", currentBaseId.toString());
+      let token = response.data.token;
 
-    this.context.setUser({
-      ...this.state.user,
-      token,
-    });
+      await SecureStore.setItemAsync("userToken", token);
+
+      await AsyncStorage.setItem("initials", initials.toString());
+      await AsyncStorage.setItem("currentBaseId", currentBaseId.toString());
+
+      this.context.setUser({
+        ...this.state.user,
+        token,
+      });
+    } catch (e) {
+      if (e.status === 401) {
+        console.log("401");
+        onNotPermittedToast();
+      } else {
+        onErrorToast();
+      }
+    }
   };
 
   render() {
