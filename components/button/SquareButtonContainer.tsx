@@ -36,11 +36,7 @@ export default class SquareButtonContainer extends Component<
       }
     );
     return (
-      <View
-        style={{
-          flex: 1,
-        }}
-      >
+      <View>
         <Text>
           Ville selectionné : {this.state.selectedLocation ?? "Aucune"}
         </Text>

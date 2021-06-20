@@ -14,7 +14,7 @@ export default class BaseInput extends Component<BaseInputProps> {
   render() {
     const { label, children } = this.props;
     return (
-      <View style={{ flex: 1, marginHorizontal: 8 }}>
+      <View>
         <Text
           style={{
             fontSize: 20,
