@@ -96,13 +96,26 @@ export default class SignIn extends Component<SignInProps, {}> {
     const { user, bases } = this.state;
 
     return (
-      <View>
-        <Input label="Initials" onChangeText={this.setInitials} />
-        <Input
-          label="Mot de passe"
-          onChangeText={this.setPassword}
-          secureTextEntry={true}
-        />
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        <View
+          style={{
+            marginVertical: 16,
+            flex: 1,
+            flexDirection: "row",
+          }}
+        >
+          <Input label="Initials" onChangeText={this.setInitials} />
+          <Input
+            label="Mot de passe"
+            onChangeText={this.setPassword}
+            secureTextEntry={true}
+          />
+        </View>
+
         <SquareButtonContainer callback={this.setCurrentBase}>
           {bases &&
             bases.map((base: any) => {
@@ -111,11 +124,13 @@ export default class SignIn extends Component<SignInProps, {}> {
               );
             })}
         </SquareButtonContainer>
-        <Button
-          disabled={this.state.user.currentBaseId === null}
-          title="Connexion"
-          onPress={this.handleSignIn}
-        />
+        <View style={{ marginTop: 16 }}>
+          <Button
+            disabled={this.state.user.currentBaseId === null}
+            title="Connexion"
+            onPress={this.handleSignIn}
+          />
+        </View>
       </View>
     );
   }

@@ -9,12 +9,12 @@ export interface SquareButtonContainerProps {
 
 export default class SquareButtonContainer extends Component<
   SquareButtonContainerProps,
-  { selectedLocation: number }
+  { selectedLocation: number | null }
 > {
   constructor(props: SquareButtonContainerProps) {
     super(props);
     this.state = {
-      selectedLocation: 0,
+      selectedLocation: null,
     };
   }
 
@@ -36,13 +36,20 @@ export default class SquareButtonContainer extends Component<
       }
     );
     return (
-      <View>
-        <Text>Ville selectionné : {this.state.selectedLocation}</Text>
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        <Text>
+          Ville selectionné : {this.state.selectedLocation ?? "Aucune"}
+        </Text>
         <ScrollView
           horizontal={true}
           contentContainerStyle={{
             flex: 1,
-            justifyContent: "space-between",
+            flexWrap: "wrap",
+            margin: "auto",
           }}
           style={{ width: 312, height: 208, margin: "auto" }}
         >

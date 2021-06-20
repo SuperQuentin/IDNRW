@@ -17,7 +17,14 @@ export default class Input extends Component<InputProps> {
     const { label } = this.props;
     return (
       <BaseInput label={label}>
-        <TextInput {...this.props} />
+        <TextInput
+          {...this.props}
+          style={{
+            backgroundColor: "#fff",
+            paddingHorizontal: 4,
+            borderRadius: 4,
+          }}
+        />
       </BaseInput>
     );
   }
