@@ -72,6 +72,7 @@ export default class RootStackNavigator extends Component<
               name="Action"
               options={{
                 headerRight: () => <LogoutBtn />,
+                title: "CSU",
               }}
               component={ActionTab}
             />

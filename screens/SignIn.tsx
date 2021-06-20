@@ -25,6 +25,7 @@ interface SignInScreen {
     initials: string;
     password: string;
     currentBaseId: number;
+    currentBaseName: string;
   };
 }
 
@@ -37,6 +38,7 @@ export default class SignIn extends Component<SignInProps, {}> {
       initials: "",
       password: "",
       currentBaseId: null,
+      currentBaseName: null,
     },
   };
 
@@ -75,10 +77,13 @@ export default class SignIn extends Component<SignInProps, {}> {
     });
   }
   setCurrentBase(currentBaseId: number) {
+    let baseName = this.state.bases.find((o) => o.id === currentBaseId);
+
     this.setState({
       user: {
         ...this.state.user,
         currentBaseId: currentBaseId,
+        currentBaseName: baseName ? baseName.name : "",
       },
     });
   }
@@ -117,18 +122,8 @@ export default class SignIn extends Component<SignInProps, {}> {
     const { user, bases } = this.state;
 
     return (
-      <View
-        style={{
-          flex: 1,
-        }}
-      >
-        <View
-          style={{
-            marginVertical: 16,
-            flex: 1,
-            flexDirection: "row",
-          }}
-        >
+      <View style={{ paddingHorizontal: 16 }}>
+        <View style={{ marginBottom: 16 }}>
           <Input label="Initials" onChangeText={this.setInitials} />
           <Input
             label="Mot de passe"
