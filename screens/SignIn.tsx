@@ -18,7 +18,7 @@ interface SignInScreen {
   user: {
     initials: string;
     password: string;
-    currentBaseID: number;
+    currentBaseId: number;
   };
 }
 
