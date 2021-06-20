@@ -13,7 +13,12 @@ export default class LogoutBtn extends Component {
           <View style={{ marginRight: 8 }}>
             <Button
               onPress={this.context.clear}
-              title={"Déconnexion de " + this.context.currentBaseName}
+              title={
+                "Déconnecter " +
+                this.context.initials +
+                " de " +
+                this.context.currentBaseName
+              }
               color="#7FC6A4"
             />
           </View>
