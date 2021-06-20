@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
 interface ReportItemProps {
   id: number;
   base: string;
   date: string;
   week: number;
-  detailsHandler: Function;
+  navigation: object;
 }
 export default class ReportItem extends Component<ReportItemProps> {
   constructor(props: ReportItemProps) {
@@ -14,12 +14,14 @@ export default class ReportItem extends Component<ReportItemProps> {
   }
 
   render() {
-    const { id, base, date, week, detailsHandler } = this.props;
+    const { id, base, date, week } = this.props;
 
     return (
       <TouchableOpacity
         key={id}
-        onPress={detailsHandler(id)}
+        onPress={() =>
+          this.props.navigation.push("ReportDetails", { reportId: id })
+        }
         style={{
           padding: 16,
           marginVertical: 4,
