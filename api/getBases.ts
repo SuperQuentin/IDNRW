@@ -1,9 +1,10 @@
 import axios from "axios";
+import { config } from "./config";
 
-const URL = `http://172.17.102.239:8000/api/bases`;
+const endpoint = `bases`;
 
 export default async () => {
-  let response = await axios.get(URL);
+  let response = await axios.get(config.url_base + endpoint);
   if (response.status === 200) {
     return response.data;
   } else {

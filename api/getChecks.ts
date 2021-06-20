@@ -1,7 +1,7 @@
 import axios from "axios";
 import { config } from "./config";
 
-const endpoint = `myactionsinshift/`;
+const endpoint = `missingchecks/`;
 
 export default async (token: string | null, id: number) => {
   if (token === null) {
