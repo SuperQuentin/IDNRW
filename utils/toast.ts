@@ -2,7 +2,7 @@ import { ToastAndroid } from "react-native";
 
 export const onSuccessToast = () => {
   ToastAndroid.showWithGravity(
-    "Mise à jour !",
+    "Réussit !",
     ToastAndroid.SHORT,
     ToastAndroid.BOTTOM
   );
