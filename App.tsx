@@ -1,22 +1,56 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { t } from 'react-native-tailwindcss';
+import "react-native-gesture-handler";
+import React, { Component } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import RootNavigation from "./navigation/RootStackNavigator";
+import { UserContext } from "./contexts/userContext";
+import * as SecureStore from "expo-secure-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import SplashScreen from "./screens/SplashScreen";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style={t.textBlue500}>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+export default class App extends Component {
+  state = {
+    user: {},
+    isLoading: true,
+  };
+
+  async componentDidMount() {
+    const token = await SecureStore.getItemAsync("token");
+    const initials = await AsyncStorage.getItem("initials");
+    const currentBaseId = await AsyncStorage.getItem("currentBaseId");
+
+    this.setState({
+      user: {
+        initials,
+        token,
+        currentBaseId: Number(currentBaseId),
+      },
+      isLoading: false,
+    });
+  }
+
+  render() {
+    const { user, isLoading } = this.state;
+
+    if (isLoading) {
+      return <SplashScreen />;
+    }
+
+    return (
+      <UserContext.Provider
+        value={{
+          ...user,
+          setUser: (newUser) => {
+            this.setState({ user: newUser });
+          },
+          clear: () => {
+            this.setState({ user: {} });
+          },
+        }}
+      >
+        <NavigationContainer>
+          <RootNavigation />
+        </NavigationContainer>
+      </UserContext.Provider>
+    );
+  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
