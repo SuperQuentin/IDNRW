@@ -22,15 +22,24 @@ export default class DrugsReportScreen extends Component<
     this.state = {
       drugs: [],
     };
-
-    props.navigation.addListener("focus", async () => await this.updateDrugs());
   }
   async componentDidMount() {
+    this.props.navigation.addListener(
+      "focus",
+      async () => await this.updateDrugs()
+    );
     await this.updateDrugs();
   }
 
+  componentWillUnmount() {
+    this.props.navigation.removeListener(
+      "focus",
+      async () => await this.updateDrugs()
+    );
+  }
+
   showDetails(id: number) {
-    id ? this.props.navigation.push("ReportDetails", { reportId: id }) : false;
+    //id ? this.props.navigation.push("ReportDetails", { reportId: id }) : false;
   }
   async updateDrugs() {
     let reports = await getReports(this.context.token);
@@ -39,7 +48,7 @@ export default class DrugsReportScreen extends Component<
     });
   }
 
-  rrenderItem = ({ item }: { item: any }) =>
+  renderItem = ({ item }: { item: any }) =>
     item ? (
       <ReportItem {...item} detailsHandler={(id) => this.showDetails(id)} />
     ) : (

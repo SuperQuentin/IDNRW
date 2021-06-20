@@ -21,11 +21,21 @@ export default class ShiftsReportScreen extends Component<
     this.state = {
       shifts: [],
     };
-    props.navigation.addListener("focus", async () => await this.updateShift());
   }
 
   async componentDidMount() {
+    this.props.navigation.addListener(
+      "focus",
+      async () => await this.updateShift()
+    );
     await this.updateShift();
+  }
+
+  componentWillUnmount() {
+    this.props.navigation.removeListener(
+      "focus",
+      async () => await this.updateShift()
+    );
   }
 
   async updateShift() {
