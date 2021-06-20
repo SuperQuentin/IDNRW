@@ -73,7 +73,6 @@ export default class NovaCheck extends Component<
   async send(token: string, item: object) {
     try {
       let response = await postNovaChecks(token, item);
-      console.log("hallo");
       if (response.status === 200) {
         onSuccessToast();
         this.setRefresh(

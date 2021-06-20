@@ -92,7 +92,6 @@ export default class PharmaCheck extends Component<
   }
 
   render() {
-    console.log(this.context.currentBaseName);
     return (
       <View
         style={{ flex: 1, justifyContent: "center" }}

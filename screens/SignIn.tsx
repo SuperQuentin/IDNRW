@@ -110,7 +110,6 @@ export default class SignIn extends Component<SignInProps, {}> {
       });
     } catch (e) {
       if (e.status === 401) {
-        console.log("401");
         onNotPermittedToast();
       } else {
         onErrorToast();
