@@ -1,11 +1,17 @@
 import React, { Component } from "react";
-import { View, Button } from "react-native";
+import { View, Button, Picker } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootParamList } from "../navigation/RootStackNavigator";
 import SquareButtonContainer from "../components/button/SquareButtonContainer";
 import SquareButton from "../components/button/SquareButton";
 import getBases from "../api/getBases";
 import getToken from "../api/getToken";
+
+import {
+  onSuccessToast,
+  onNotPermittedToast,
+  onErrorToast,
+} from "../utils/toast";
 
 import { UserContext } from "../contexts/userContext";
 import * as SecureStore from "expo-secure-store";
@@ -18,7 +24,8 @@ interface SignInScreen {
   user: {
     initials: string;
     password: string;
-    currentBaseID: number;
+    currentBaseId: number;
+    currentBaseName: string;
   };
 }
 
@@ -30,7 +37,8 @@ export default class SignIn extends Component<SignInProps, {}> {
     user: {
       initials: "",
       password: "",
-      currentBaseId: 0,
+      currentBaseId: null,
+      currentBaseName: null,
     },
   };
 
@@ -69,40 +77,60 @@ export default class SignIn extends Component<SignInProps, {}> {
     });
   }
   setCurrentBase(currentBaseId: number) {
+    let baseName = this.state.bases.find((o) => o.id === currentBaseId);
+
     this.setState({
       user: {
         ...this.state.user,
         currentBaseId: currentBaseId,
+        currentBaseName: baseName ? baseName.name : "",
       },
     });
   }
 
   handleSignIn = async () => {
-    const { initials, password, currentBaseId } = this.state.user;
-    const token = await getToken(initials, password);
+    try {
+      const { initials, password, currentBaseId } = this.state.user;
+      const response = await getToken(initials, password);
 
-    await SecureStore.setItemAsync("userToken", token);
+      if (response.status === 200) {
+        onSuccessToast();
+      }
 
-    await AsyncStorage.setItem("initials", initials.toString());
-    await AsyncStorage.setItem("currentBaseId", currentBaseId.toString());
+      let token = response.data.token;
 
-    this.context.setUser({
-      ...this.state.user,
-      token,
-    });
+      await SecureStore.setItemAsync("userToken", token);
+
+      await AsyncStorage.setItem("initials", initials.toString());
+      await AsyncStorage.setItem("currentBaseId", currentBaseId.toString());
+
+      this.context.setUser({
+        ...this.state.user,
+        token,
+      });
+    } catch (e) {
+      if (e.status === 401) {
+        onNotPermittedToast();
+      } else {
+        onErrorToast();
+      }
+    }
   };
 
   render() {
     const { user, bases } = this.state;
 
     return (
-      <View>
-        <Input label="Initials" onChangeText={this.setInitials} />
-        <Input
-          label="Mot de passe"
-          onChangeText={this.setPassword}
-          secureTextEntry={true}
-        />
+      <View style={{ paddingHorizontal: 16 }}>
+        <View style={{ marginBottom: 16 }}>
+          <Input label="Initials" onChangeText={this.setInitials} />
+          <Input
+            label="Mot de passe"
+            onChangeText={this.setPassword}
+            secureTextEntry={true}
+          />
+        </View>
+
         <SquareButtonContainer callback={this.setCurrentBase}>
           {bases &&
             bases.map((base: any) => {
@@ -111,7 +139,13 @@ export default class SignIn extends Component<SignInProps, {}> {
               );
             })}
         </SquareButtonContainer>
-        <Button title="Connexion" onPress={this.handleSignIn} />
+        <View style={{ marginTop: 16 }}>
+          <Button
+            disabled={this.state.user.currentBaseId === null}
+            title="Connexion"
+            onPress={this.handleSignIn}
+          />
+        </View>
       </View>
     );
   }

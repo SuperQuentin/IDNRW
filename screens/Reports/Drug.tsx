@@ -6,6 +6,11 @@ import getReports from "../../api/getReports";
 import ReportItem from "../../components/ReportItem";
 import { UserContext } from "../../contexts/userContext";
 import { ConsultationParamList } from "../../navigation/ConsultationStackNavigator";
+import {
+  onSuccessToast,
+  onNotPermittedToast,
+  onErrorToast,
+} from "../../utils/toast";
 
 export type DrugsReportProps = StackScreenProps<
   ConsultationParamList,
@@ -22,29 +27,46 @@ export default class DrugsReportScreen extends Component<
     this.state = {
       drugs: [],
     };
-
-    props.navigation.addListener("focus", async () => await this.updateDrugs());
   }
   async componentDidMount() {
+    this.props.navigation.addListener(
+      "focus",
+      async () => await this.updateDrugs()
+    );
     await this.updateDrugs();
   }
 
-  showDetails(id: number) {
-    id ? this.props.navigation.push("ReportDetails", { reportId: id }) : false;
-  }
-  async updateDrugs() {
-    let reports = await getReports(this.context.token);
-    this.setState({
-      drugs: reports.drug,
-    });
+  componentWillUnmount() {
+    this.props.navigation.removeListener(
+      "focus",
+      async () => await this.updateDrugs()
+    );
   }
 
-  rrenderItem = ({ item }: { item: any }) =>
-    item ? (
-      <ReportItem {...item} detailsHandler={(id) => this.showDetails(id)} />
-    ) : (
-      ""
-    );
+  showDetails(id: number) {
+    //id ? this.props.navigation.push("ReportDetails", { reportId: id }) : false;
+  }
+  async updateDrugs() {
+    try {
+      let response = await getReports(this.context.token);
+
+      if (response.status === 200) {
+        onSuccessToast();
+        this.setState({
+          drugs: response.data.drug,
+        });
+      }
+    } catch (e) {
+      if (e.status === 401) {
+        onNotPermittedToast();
+      } else {
+        onErrorToast();
+      }
+    }
+  }
+
+  renderItem = ({ item }: { item: any }) =>
+    item ? <ReportItem {...item} navigation={this.props.navigation} /> : "";
 
   render() {
     return (
@@ -54,9 +76,6 @@ export default class DrugsReportScreen extends Component<
             data={this.state.drugs}
             renderItem={this.renderItem}
             keyExtractor={(item) => item.id.toString()}
-            style={{
-              marginTop: 24,
-            }}
           />
         ) : (
           <Text>Rine</Text>

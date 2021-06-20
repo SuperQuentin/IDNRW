@@ -1,7 +1,7 @@
 import axios from "axios";
 import { config } from "./config";
 
-const endpoint = `myactionsinshift/`;
+const endpoint = `missingchecks/`;
 
 export default async (token: string | null, id: number) => {
   if (token === null) {
@@ -15,5 +15,9 @@ export default async (token: string | null, id: number) => {
     config.url_base + endpoint + id.toString(),
     axios_config
   );
-  return response;
+  if (response.status === 200) {
+    return response.data;
+  } else {
+    //todo: somethings wrong
+  }
 };

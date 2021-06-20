@@ -41,12 +41,12 @@ export default class ReportsTopTabNavigator extends Component<ReportsTopTabProps
         <Tab.Screen
           name="Shift"
           component={ShiftsReportScreen}
-          options={{ title: "Shift" }}
+          options={{ title: "Garde" }}
         />
         <Tab.Screen
           name="Drug"
           component={DrugsReportScreen}
-          options={{ title: "Drug" }}
+          options={{ title: "Stup" }}
         />
       </Tab.Navigator>
     );

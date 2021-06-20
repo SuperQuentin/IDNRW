@@ -1,19 +1,16 @@
 import axios from "axios";
+import { config } from "./config";
 
-const URL = `http://192.168.178.21:8000/api/reports`;
+const endpoint = `reports`;
 
 export default async (token: string | null) => {
   if (token === null) {
     return false;
   }
-  const config = {
+  const axios_config = {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  let response = await axios.get(URL, config);
-  if (response.status === 200) {
-    return response.data;
-  } else {
-    //todo: somethings wrong
-  }
+  let response = await axios.get(config.url_base + endpoint, axios_config);
+  return response;
 };

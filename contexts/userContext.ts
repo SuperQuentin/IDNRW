@@ -4,6 +4,7 @@ interface UserContextValue {
   initials?: string | null;
   token?: string | null;
   currentBaseId?: string | null;
+  currentBaseName?: string | null;
   setUser: (newUser: any) => void;
   clear: () => void;
 }

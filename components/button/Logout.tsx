@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button } from "react-native";
+import { Button, View } from "react-native";
 import { UserContext } from "../../contexts/userContext";
 import * as SecureStore from "expo-secure-store";
 
@@ -10,7 +10,18 @@ export default class LogoutBtn extends Component {
     return (
       <UserContext.Consumer>
         {() => (
-          <Button onPress={this.context.clear} title="logout" color="#A997DF" />
+          <View style={{ marginRight: 8 }}>
+            <Button
+              onPress={this.context.clear}
+              title={
+                "Déconnecter " +
+                this.context.initials +
+                " de " +
+                this.context.currentBaseName
+              }
+              color="#7FC6A4"
+            />
+          </View>
         )}
       </UserContext.Consumer>
     );
