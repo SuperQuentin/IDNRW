@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Button } from "react-native";
+import { View, Button, Picker } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootParamList } from "../navigation/RootStackNavigator";
 import SquareButtonContainer from "../components/button/SquareButtonContainer";
@@ -30,7 +30,7 @@ export default class SignIn extends Component<SignInProps, {}> {
     user: {
       initials: "",
       password: "",
-      currentBaseId: 0,
+      currentBaseId: null,
     },
   };
 
@@ -111,7 +111,11 @@ export default class SignIn extends Component<SignInProps, {}> {
               );
             })}
         </SquareButtonContainer>
-        <Button title="Connexion" onPress={this.handleSignIn} />
+        <Button
+          disabled={this.state.user.currentBaseId === null}
+          title="Connexion"
+          onPress={this.handleSignIn}
+        />
       </View>
     );
   }
