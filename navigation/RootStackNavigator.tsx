@@ -1,4 +1,5 @@
 import React, { Component, createContext, ReactNode, useReducer } from "react";
+import { Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { UserContext } from "../contexts/userContext";
@@ -63,6 +64,13 @@ export default class RootStackNavigator extends Component<
               options={{
                 title: "Login",
                 animationTypeForReplace: this.state.isSignOut ? "pop" : "push",
+                headerRight: () => {
+                  return (
+                    <Text style={{ color: "gray", marginRight: 20 }}>
+                      version eval QAN
+                    </Text>
+                  );
+                },
               }}
             ></Root.Screen>
           </>
