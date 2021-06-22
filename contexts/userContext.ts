@@ -5,6 +5,7 @@ interface UserContextValue {
   token?: string | null;
   currentBaseId?: string | null;
   currentBaseName?: string | null;
+  countUnconfirmedWorkplans?: number | null;
   setUser: (newUser: any) => void;
   clear: () => void;
 }
