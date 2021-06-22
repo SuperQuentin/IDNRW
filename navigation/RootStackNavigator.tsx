@@ -7,6 +7,7 @@ import { UserContext } from "../contexts/userContext";
 // import screen views use in the stack navigator
 import SplashScreen from "../screens/SplashScreen";
 import SignInScreen from "../screens/SignIn";
+import TimeTableScreen from "../screens/Timetable";
 
 import ActionTab from "./ActionBottomTabNavigator";
 import LogoutBtn from "../components/button/Logout";
@@ -18,6 +19,7 @@ export interface RootStackProps {
 export type RootParamList = {
   SignIn: { signIn: Function };
   Action: undefined;
+  TimeTable: undefined;
 };
 
 export interface RootState {
@@ -83,6 +85,14 @@ export default class RootStackNavigator extends Component<
                 title: "CSU",
               }}
               component={ActionTab}
+            />
+            <Root.Screen
+              name="TimeTable"
+              options={{
+                headerRight: () => <LogoutBtn />,
+                title: "",
+              }}
+              component={TimeTableScreen}
             />
           </>
         )}
