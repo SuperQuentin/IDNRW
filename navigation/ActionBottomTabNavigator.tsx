@@ -1,4 +1,5 @@
 import React, { Component, ReactNode } from "react";
+import { Button } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ConsultationNav from "./ConsultationStackNavigator";
 import ReportNav from "./ReportDrugsStackNavigator";

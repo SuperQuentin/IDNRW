@@ -6,7 +6,7 @@ import { UserContext } from "./contexts/userContext";
 import * as SecureStore from "expo-secure-store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SplashScreen from "./screens/SplashScreen";
-
+import ConfirmationBtn from "./components/button/TimetableConfirmationButton";
 export default class App extends Component {
   state = {
     user: {},
@@ -47,6 +47,7 @@ export default class App extends Component {
           },
         }}
       >
+        <ConfirmationBtn numberConfirmation={2} visible={true} />
         <NavigationContainer>
           <RootNavigation />
         </NavigationContainer>
