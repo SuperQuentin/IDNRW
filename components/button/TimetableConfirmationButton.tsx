@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Button } from "react-native";
+import { View, Text, Button } from "react-native";
 
 interface TimetableConfirmationButtonProps {
   visible: boolean;
@@ -10,16 +10,26 @@ interface TimetableConfirmationButtonProps {
 export default class TimetableConfirmationButton extends Component<TimetableConfirmationButtonProps> {
   constructor(props: TimetableConfirmationButtonProps) {
     super(props);
-    this.state = {
-      visible: this.props.visible || false,
-    };
   }
   render() {
-    return this.state.visible ? (
-      <View style={{ position: "absolute", bottom: 48, right: 24 }}>
+    return this.props.visible ? (
+      <View
+        style={{ position: "absolute", bottom: 48, right: 24, elevation: 16 }}
+      >
+        <Text
+          style={{
+            backgroundColor: "red",
+            borderRadius: 32,
+            width: 32,
+            position: "relative",
+            color: "#ffffff",
+          }}
+        >
+          {this.props.numberConfirmation}
+        </Text>
         <Button
           title="Horaires à confirmer"
-          onPress={() => console.log("work")}
+          onPress={() => this.props.navigation}
         />
       </View>
     ) : (
