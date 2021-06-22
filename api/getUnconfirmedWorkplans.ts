@@ -3,7 +3,7 @@ import { config } from "./config";
 
 const endpoint = `unconfirmedworkplans/`;
 
-export default async (token: string | null, id: number) => {
+export default async (token: string | null) => {
   if (token === null) {
     return false;
   }
