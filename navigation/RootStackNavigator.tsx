@@ -58,8 +58,8 @@ export default class RootStackNavigator extends Component<
 
     return (
       <Root.Navigator initialRouteName="TimeTable">
-        {" "}
-        // TODO Remove initialRouteName or Set it to action
+        {/* TODO Remove initialRouteName or Set it to action */}
+
         {!token ? (
           <>
             <Root.Screen
